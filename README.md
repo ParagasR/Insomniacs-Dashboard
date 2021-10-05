@@ -12,6 +12,8 @@ so THAT I can see the ratings(RT), reviews(RT), a synopsis (OMDb), and a trailer
 Given as an unauthenticated user
 WHEN I arrive at the website
 THEN I am presented with a search bar and a list of recommended movies
+WHEN I arrive at the website
+THEN I am presented with a countdown timer to Halloween
 WHEN I search for a movie in the search bar
 THEN I am presented with a list of movies that best fits my criteria
 
