@@ -1,19 +1,19 @@
 #logo {
-    display: inline-block;
-    height: 100px;
-    width: 250px; /* correct proportions to specified height */ 
+  display: inline-block;
+  height: 100px;
+  width: 250px; /* correct proportions to specified height */
 }
 
 .background-image {
- background-image: url("../scary.jpg");
- opacity: .5;
- background-size: cover;
- background-position: center;
+  background-image: url("../scary.jpg");
+  opacity: 0.5;
+  background-size: cover;
+  background-position: center;
 }
 
 .image img {
   height: 160px;
-  width: 120px
+  width: 120px;
 }
 
 ul {
@@ -25,4 +25,43 @@ ul {
 
 li {
   float: left;
+}
+/* CountDown  ------------------------- */
+h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: yellow;
+}
+.halloween-counter {
+  min-height: height 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.countdown {
+  display: flex;
+  justify-content: space-evenly;
+  color: yellowgreen;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+}
+.day .hour .minute .second {
+  font-size: 3rem;
+  color: tomato;
+}
+h3 {
+  color: tomato;
+  font-size: 2rem;
+  font-weight: bold;
+}
+h4 {
+  color: royalblue;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.second {
+  justify-content: center;
 }
