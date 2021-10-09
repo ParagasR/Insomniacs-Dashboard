@@ -2,66 +2,30 @@
 
 <html>
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Insomniac's</title>
 
-    <!--Bulma -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
+    <!--Bulma -->   
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 
     <!--Font awesome-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
-    />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" >
+    
     <!-- stylesheet CSS-->
     <link rel="stylesheet" href="./assets/css/style.css" />
-
-    <link
-      rel="stylesheet"
-      href="https://fonts.google.com/icons?selected=Material+Icons"
-    />
+    
+    <link rel="stylesheet" href="https://fonts.google.com/icons?selected=Material+Icons" /> 
   </head>
 
-  <body>
+  <body>    
     <header>
       <div class="columns">
         <div class="column has-background-black">
-          <a href="index.html"
-            ><img
-              id="logo"
-              src="assets\onlinelogomaker-100821-1950-8917-500.jpg"
-          /></a>
-          <div class="halloween-counter">
-            <div>
-              <h2>CLOCK Is Ticking For Haloween!!!</h2>
-              <div class="countdown">
-                <div class="container-day">
-                  <h3 class="day">Time</h3>
-                  <h4>Day</h4>
-                </div>
-                <div class="container-hour">
-                  <h3 class="hour">Time</h3>
-                  <h4>Hour</h4>
-                </div>
-                <div class="container-minute">
-                  <h3 class="minute">Time</h3>
-                  <h4>Minute</h4>
-                </div>
-                <div class="container-second">
-                  <h3 class="second">Time</h3>
-                  <h4>Second</h4>
-                </div>
           
-              </div>
-            </div>
-          </div>
-
+          <a href="#"><img id="logo" src="assets/onlinelogomaker-100721-2129-1016-2000-transparent.png"></a>
+        
           <!--<a href="" target="_blank" class = "wishList"> Wish List </a>-->
           <!--need to update href value for new page navigation-->
           <!-- <span class="material-icons">Wish List</span> -->
@@ -70,9 +34,11 @@
     </header>
 
     <main>
+
       <section class="hero has-background-black is-small">
         <div class="hero-body">
-          <!--search bar 
+
+        <!--search bar -->
           <div class="columns">
             <div class="column is-three-fifths">
               <p class="control has-icons-left">
@@ -80,36 +46,33 @@
                 <button class="button is-danger"><i class="fas fa-search"></i></button>
               </p>
             </div>
-          </div> -->
-
+          </div>
+        </div>        
       </section>
 
       <!--Horror movie suggestions in cards/ dinamically created-->
       <!--this is not aa bulma class-->
+        
 
-      <!--add a s border, static box that R can put content-->
+          <!--add a s border, static box that R can put content-->
 
-      <section class="section is-large is-relative">
-        <div class="is-overlay background-image"></div>
+          <section class="section is-large is-relative">
+            <div class="is-overlay background-image"></div>
 
-            <h1 class="title">Most Popular Movies</h1>
+            <h1 class="title">Recomended Movies</h1>
             <div class="container is-fluid ">
               <ul id='row-1'></ul>
               <ul id='row-2'></ul>
               <ul id='row-3'></ul>
-              <ul id='row-4'></ul>
-
-              <nav class="pagination is-centered" role="navigation" aria-label="pagination" id='pagination-btns'>
-                <a class="pagination-previous" id='previous'>Previous</a>
-                <a class="pagination-next" id='next'>Next page</a>
-              </nav>
+              <ul id='row-4'></ul>  
             </div>
           </section>
 
       <footer class="footer">
         <div class="content has-text-centered">
           <p>
-            <strong>Copyrights to RMCS | Follow us on Twitter </strong>
+            <strong>Copyrights to RMCS | Follow us on Twitter </strong> 
+
           </p>
         </div>
       </footer>
@@ -117,6 +80,5 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
-    <script src="./assets/js/countdown.js"></script>
   </body>
 </html>
