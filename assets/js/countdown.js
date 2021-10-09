@@ -15,11 +15,6 @@ const countdown = () => {
   document.querySelector(".hour").innerText = remainingHour;
   document.querySelector(".minute").innerText = remainingMinute;
   document.querySelector(".second").innerText = remainingSecond;
-
-  console.log(remainingDay);
-  console.log(remainingHour);
-  console.log(remainingMinute);
-  console.log(remainingSecond);
 };
 setInterval(countdown, 1000);
 
