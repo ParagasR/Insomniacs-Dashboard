@@ -9,12 +9,20 @@
  opacity: .5;
  background-size: cover;
  background-position: center;
-
 }
 
-footer {
-  font-size: xx-large;
-  font-weight: 500;
-  font-weight: bolder;
-  text-align: center;
+.image img {
+  height: 160px;
+  width: 120px
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
 }
