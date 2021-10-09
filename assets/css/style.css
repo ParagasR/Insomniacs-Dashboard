@@ -4,53 +4,15 @@
     height: 100px;
     width: 250px; /* correct proportions to specified height */  
   }
+
+.background-image {
+ background-image: url("../scary.jpg");
+ opacity: .5;
+ background-size: cover;
+ background-position: center;
+
+}
+
  
-  /*header .headerLogo {
-    font-family: monospace;
-    font-size: 30px;
-    font-weight: 800;
-    color: white;
-    text-transform: uppercase;
-    text-align: left;
-    display: block;
-    margin: 0 auto;
-    padding: 10px 0;
-  }*/
 
-
-  header nav ul {
-    margin: 0 auto;
-  }
-  
-  header nav ul li {
-    display: inline-block;
-    list-style: none;
-    padding: -10px 0;
-  }
-  header nav ul li a {
-    font-family: Cattamaran;
-    font-size: 20px;
-    font-weight: 600;
-    color: blue;
-    text-transform: uppercase;
-    text-align: left;
-  }
-  .mainHero {
-    height: calc(50vh - 50px);
-    width: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  }
-
-
-  
-
-
-  
-  footer {
-    font-size:small;
-    font-weight: 100;
-    font-weight: bolder;
-    text-align: center;
-  }
+ 
