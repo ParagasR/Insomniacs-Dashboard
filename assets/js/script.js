@@ -1,21 +1,39 @@
-var OMDBApiURL = "http://www.omdbapi.com/?i=tt3896198&apikey=e3bfc809&s=diana"
-var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=27&with_watch_monetization_types=flatrate"
 var cardTileEl = $('#card-tiles');
+var previousEl = $('#previous');
+var paginationEl = $('#pagination-btns')
+var nextEl = $('#next');
 var ulRow1 = $('#row-1');
 var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
+var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
+var pageIndex = 1;
+var numberOfPages;
+var pageParameter = '&page=' + pageIndex;
+var currentMovieArray;
+var fetchedUrl = TMDBApiURL;
 
 
-fetch(TMDBApiURL)
+callApi(fetchedUrl + pageParameter);
+
+function callApi(url) {
+  fetch(url)
 .then (function (response){
     return response.json()
 })
 .then (function (data){
     console.log(data.results)
+    console.log(data)
 
-    generateCardList(data.results)
+    var title = data.original_title;
+
+    numberOfPages = data.total_pages;
+    currentMovieArray = data.results;
+    pageParameter = '&page=';
+
+    generateCardList(currentMovieArray)
 })
+}
 
 function generateCardList(movieArray) {
   //create 15 cards that will generate within the cardtilesel
@@ -23,6 +41,7 @@ function generateCardList(movieArray) {
   for (let i = 0; i < movieArray.length; i++) {
     let mainCard = $('<div>');
     mainCard.addClass('card');
+    mainCard.attr('id', 'movie')
 
     let cardImage = $('<div>');
     cardImage.addClass('card-image');
@@ -53,3 +72,35 @@ function generateCardList(movieArray) {
     }
   }
 }
+
+function clearContent() {
+  ulRow1.empty();
+  ulRow2.empty();
+  ulRow3.empty();
+  ulRow4.empty();
+}
+
+//=============Event Listeners==================
+paginationEl.on('click', function(event){ 
+  event.preventDefault();
+  if (event.target.id == 'previous') {
+    if (pageIndex != 1) {
+      pageIndex--;
+      pageParameter += pageIndex;
+
+      clearContent();
+      callApi(fetchedUrl + pageParameter)
+      console.log(pageParameter);
+    }
+  }
+  if (event.target.id == 'next') {
+    if (pageIndex != numberOfPages) {
+      pageIndex++
+      pageParameter += pageIndex;
+
+      clearContent();
+      callApi(fetchedUrl + pageParameter)
+      console.log(pageParameter);
+    }
+  }
+})
