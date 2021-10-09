@@ -1,9 +1,8 @@
-  
-  #logo {
+#logo {
     display: inline-block;
     height: 100px;
-    width: 250px; /* correct proportions to specified height */  
-  }
+    width: 250px; /* correct proportions to specified height */ 
+}
 
 .background-image {
  background-image: url("../scary.jpg");
@@ -13,6 +12,9 @@
 
 }
 
- 
-
- 
+footer {
+  font-size: xx-large;
+  font-weight: 500;
+  font-weight: bolder;
+  text-align: center;
+}
