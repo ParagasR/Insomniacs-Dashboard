@@ -7,11 +7,12 @@ var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
+var YtApiURL = 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CconentDetails%2Cstatistics&id=Ks-_M1QhMc&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk'
 var pageIndex = 1;
 var numberOfPages;
 var pageParameter = '&page=' + pageIndex;
 var currentMovieArray;
-var fetchedUrl = TMDBApiURL;
+var fetchedUrl = YtApiURL;
 
 
 callApi(fetchedUrl + pageParameter);
