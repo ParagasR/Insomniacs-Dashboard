@@ -71,3 +71,15 @@ h4 {
 .second {
   justify-content: center;
 }
+
+/* --------------Modal------------------------ */
+.box {
+  height: 25vw;
+  width: 75vw;
+  max-width: 100%;
+}
+
+.modal-content {
+  max-width: 100%;
+  overflow-x: hidden;
+}

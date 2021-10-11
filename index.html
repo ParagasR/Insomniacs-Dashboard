@@ -21,14 +21,11 @@
 
   <body>    
     <header>
-      <div class="columns">
-        <div class="column has-background-black">
-          
+      <div class="columns has-background-black">
+        <div class="column is-2">
           <a href="#"><img id="logo" src="./assets/onlinelogomaker-100921-1328-9126-2000-transparent.png"></a>
-        
-          <!--<a href="" target="_blank" class = "wishList"> Wish List </a>-->
-          <!--need to update href value for new page navigation-->
-          <!-- <span class="material-icons">Wish List</span> -->
+        </div>
+        <div class='column'>
           <div class="halloween-counter">
             <div>
               <h2>CLOCK Is Ticking For Haloween!!!</h2>
@@ -53,7 +50,6 @@
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </header>
@@ -62,27 +58,18 @@
       <section class="hero has-background-black is-small">
         <div class="hero-body">
           <!--search bar -->
-          <div class="columns">
-            <div class="column is-three-fifths">
-              <p class="control has-icons-left">
-                <input class="input is-danger " type="search" placeholder="Enter Horror movie here"/>
-                <button class="button is-danger"><i class="fas fa-search"></i></button>
-              </p>
-            </div>
+          <div class="control has-icons-left columns">
+            <input class="input is-danger column is-three-fifths  is-offset-2" type="search" placeholder="Enter Horror movie here">
+            <button class="button is-danger column is-1"><i class="fas fa-search"></i></button>
           </div>
         </div>        
       </section>
 
       <!--Horror movie suggestions in cards/ dinamically created-->
-  
-        
-
-          <!--add a s border, static box that R can put content-->
-
       <section class="section is-large is-relative">
         <div class="is-overlay background-image"></div>
         <div class='columns'>
-          <div class='is-one-quarter'>
+          <div class='column is-one-fifth'>
             <h3 class='title'>Recently Viewed</h3>
             <ul id='rv-list'></ul>
           </div>
@@ -101,15 +88,28 @@
           </div>  
         </div>  
       </section>
-
-      <footer class="footer">
-        <div class="content has-text-centered">
-          <p>
-            <strong>Copyrights to RMCS | Follow us on Twitter </strong> 
-          </p>
+      
+      <div class="modal" id='modal'>
+        <div class="modal-background"></div>
+        <div class="modal-content">
+          <div class='box content'>
+            <h1>This is the movie title</h1>
+            <iframe></iframe>
+            <h5>Rating: </h5>
+            <p class='is-flex flex-wrap'>This is the movie description</p>
+          </div>
         </div>
-      </footer>
+        <button class="modal-close is-large" aria-label="close" id='close'></button>
+      </div>
     </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Copyrights to RMCS | Follow us on Twitter </strong> 
+        </p>
+      </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
