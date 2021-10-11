@@ -6,6 +6,7 @@ var ulRow1 = $('#row-1');
 var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
+var modalEl = $('#modal');
 var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
 var YtApiURL = 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=8LFzv7cMnD8&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk'
 var pageIndex = 1;
@@ -37,7 +38,7 @@ function callApi(url) {
 }
 
 function generateCardList(movieArray) {
-  //create 15 cards that will generate within the cardtilesel
+  //create 15 cards that will generate movie details
 
   for (let i = 0; i < movieArray.length; i++) {
     let mainCard = $('<div>');
@@ -57,7 +58,8 @@ function generateCardList(movieArray) {
     posterImage.attr('src', posterPath);
     posterImage.attr('alt', movieArray[i].original_title);
     posterImage.attr('data-title', (movieArray[i].original_title));
-    posterImage.attr('data-description', movieArray[i].overview)
+    posterImage.attr('data-description', movieArray[i].overview);
+    posterImage.attr('data-rating', movieArray[i].vote_average);
 
     cardFigure.append(posterImage);
     cardImage.append(cardFigure);
@@ -85,12 +87,20 @@ function clearContent() {
   ulRow4.empty();
 }
 
-function generateWindow(title, description) {
+function generateWindow(title, description, rating) {
   //get yt video URL
-  generateYtVideo(title);
+        // generateYtVideo(title);
   //movie title at the top
   //yt video below title
   //overview below the movie
+  console.log(title);
+  console.log(description);
+  console.log(rating)
+  $('.box h1').text(title);
+  $('.box p').text(description);
+  $('.box h5').text('Rating: ' + rating + '/10');
+
+  modalEl.addClass('is-active');
 }
 
 function generateYTVideo(movieTitle) {
@@ -130,8 +140,12 @@ $('#card-tiles ul').on('click', function(event){
   //save movie title to local storage
   //update recently viewed list
   //call function to update list
-  console.log($(event.target).data('title'));
-  console.log($(event.target).data('description'))
 
-  generateWindow($(event.target).data('title'), $(event.target).data('description')
+  generateWindow($(event.target).data('title'), $(event.target).data('description'), $(event.target).data('rating'));
+})
+
+$('button').on('click', function(event){
+  if (event.target.id === 'close') {
+    modalEl.removeClass('is-active');
+  }
 })
