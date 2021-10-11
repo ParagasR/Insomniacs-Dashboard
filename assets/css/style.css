@@ -26,6 +26,12 @@ ul {
 li {
   float: left;
 }
+
+#movie:hover {
+  cursor: pointer;
+}
+
+
 /* CountDown  ------------------------- */
 h2 {
   font-size: 2.5rem;
