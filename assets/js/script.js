@@ -1,3 +1,4 @@
+// Dom elements
 var movieDataEl = $('#movieData');
 var previousEl = $('#previous');
 var paginationEl = $('#pagination-btns')
@@ -7,18 +8,20 @@ var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var modalEl = $('#modal');
-var videoPlayer = $('#video-player');
+var videoPlayerEl = $('#video-player');
+
+// Api urls
 var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
 var YtApiURL =   'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
 
+//Global variables
 var pageIndex = 1;
 var numberOfPages;
 var pageParameter = '&page=' + pageIndex;
 var currentMovieArray;
-var fetchedUrl = TMDBApiURL;
 
 
-callApi(fetchedUrl + pageParameter);
+callApi(TMDBApiURL + pageParameter);
 
 function callApi(url) {
 fetch(url)
@@ -115,10 +118,8 @@ function generateYTVideo(movieTitle) {
   //return video URL
 
   let search = movieTitle + " trailer";
-
   searchArray = search.split('');
   for (let i = 0; i < searchArray.length; i++) {
-    console.log(searchArray[i])
     if (searchArray[i] === "'") {
       searchArray[i] = "%27";
     } else if ((search[i] === ' ')) {
@@ -126,19 +127,17 @@ function generateYTVideo(movieTitle) {
     }
   }
   search = searchArray.join('');
-
-  YtApiURL += search
-  fetch(YtApiURL)
+  fetch(YtApiURL + search)
   .then (function (response){
     return response.json()
 })
 .then (function (data) {
   console.log(data);
-  let ytURL =  'https://www.youtube.com/embed/' + data.items[0].id.videoId;
-  console.log(ytURL);
-  videoPlayer.attr('src', ytURL);
+  let ytURL =  'https://www.youtube.com/embed/';
+  console.log(ytURL  + data.items[0].id.videoId);
+  videoPlayerEl.attr('src', (ytURL + data.items[0].id.videoId));
 })
-  // return ytURL
+  return
 }
 
 //=============Event Listeners==================
