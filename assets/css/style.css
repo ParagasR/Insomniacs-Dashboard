@@ -1,7 +1,7 @@
 #logo {
   display: inline-block;
   height: 100px;
-  width: 250px; /* correct proportions to specified height */ 
+  width: 250px; /* correct proportions to specified height */
 }
 
 .background-image {
@@ -29,47 +29,6 @@ li {
 
 #movie:hover {
   cursor: pointer;
-}
-
-
-/* CountDown  ------------------------- */
-h2 {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: yellow;
-}
-.halloween-counter {
-  min-height: height 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.countdown {
-  display: flex;
-  justify-content: space-evenly;
-  color: yellowgreen;
-  font-weight: bold;
-  font-size: 1.5rem;
-  text-align: center;
-  padding: 1rem;
-}
-.day .hour .minute .second {
-  font-size: 3rem;
-  color: tomato;
-}
-h3 {
-  color: tomato;
-  font-size: 2rem;
-  font-weight: bold;
-}
-h4 {
-  color: royalblue;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-.second {
-  justify-content: center;
 }
 
 /* --------------Modal------------------------ */
