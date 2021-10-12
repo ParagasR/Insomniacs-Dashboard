@@ -7,8 +7,10 @@ var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var modalEl = $('#modal');
+var videoPlayer = $('#video-player');
 var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
-var YtApiURL = 'https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=8LFzv7cMnD8&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk'
+var YtApiURL =   'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
+
 var pageIndex = 1;
 var numberOfPages;
 var pageParameter = '&page=' + pageIndex;
@@ -19,7 +21,7 @@ var fetchedUrl = TMDBApiURL;
 callApi(fetchedUrl + pageParameter);
 
 function callApi(url) {
-  fetch(url)
+fetch(url)
 .then (function (response){
     return response.json()
 })
@@ -32,7 +34,7 @@ function callApi(url) {
     numberOfPages = data.total_pages;
     currentMovieArray = data.results;
     pageParameter = '&page=';
-
+  
     generateCardList(currentMovieArray)
 })
 }
@@ -96,6 +98,9 @@ function generateWindow(title, description, rating) {
   console.log(title);
   console.log(description);
   console.log(rating)
+
+  generateYTVideo(title);
+
   $('.box h1').text(title);
   $('.box p').text(description);
   $('.box h5').text('Rating: ' + rating + '/10');
@@ -108,6 +113,32 @@ function generateYTVideo(movieTitle) {
   //take the new string and append to ytAPIURL
   //fetch ytAPIURL and grab video URL
   //return video URL
+
+  let search = movieTitle + " trailer";
+
+  searchArray = search.split('');
+  for (let i = 0; i < searchArray.length; i++) {
+    console.log(searchArray[i])
+    if (searchArray[i] === "'") {
+      searchArray[i] = "%27";
+    } else if ((search[i] === ' ')) {
+      searchArray[i] = "%20";
+    }
+  }
+  search = searchArray.join('');
+
+  YtApiURL += search
+  fetch(YtApiURL)
+  .then (function (response){
+    return response.json()
+})
+.then (function (data) {
+  console.log(data);
+  let ytURL =  'https://www.youtube.com/embed/' + data.items[0].id.videoId;
+  console.log(ytURL);
+  videoPlayer.attr('src', ytURL);
+})
+  // return ytURL
 }
 
 //=============Event Listeners==================
@@ -145,6 +176,7 @@ $('#card-tiles ul').on('click', function(event){
 })
 
 $('button').on('click', function(event){
+  event.stopPropagation();
   if (event.target.id === 'close') {
     modalEl.removeClass('is-active');
   }
