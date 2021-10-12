@@ -1,7 +1,6 @@
 // Dom elements
-var movieDataEl = $('#movieData');
+var documentEl = $(document);
 var previousEl = $('#previous');
-var paginationEl = $('#pagination-btns')
 var nextEl = $('#next');
 var ulRow1 = $('#row-1');
 var ulRow2 = $('#row-2');
@@ -12,7 +11,7 @@ var videoPlayerEl = $('#video-player');
 var recentListEl = $('#rv-list');
 
 // Api urls
-var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
+var TMDBApiURL = 'https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate'
 var YtApiURL =   'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
 
 //Global variables
@@ -108,43 +107,54 @@ function generateYTVideo(movie) {
   //take the new string and append to ytAPIURL
   //fetch ytAPIURL and grab video URL
   //return video URL
-  let search = movie.title + " trailer";
-  searchArray = search.split('');
-  for (let i = 0; i < searchArray.length; i++) {
-    if (searchArray[i] === "'") {
-      searchArray[i] = "%27";
-    } else if ((search[i] === ' ')) {
-      searchArray[i] = "%20";
-    }
-  }
-  search = searchArray.join('');
+  let search = createSearchedItem(movie.title);
   //if search is in local storage then generate card from local storage
   //else run fetch then generate card
 
-  fetch(YtApiURL + search)
-  .then (function (response){
-    return response.json()
-  })
-  .then (function (data) {
-    let ytURL =  'https://www.youtube.com/embed/';
-    let savedURL = ytURL + data.items[0].id.videoId
-    movie.url = savedURL;
-    localStorage.setItem(search, JSON.stringify(movie));
-    generateWindow(movie);
-  })
-  
+  console.log(search)
+  if (localStorage.getItem(search) != null) {
+    console.log(localStorage.getItem(search))
+    generateWindow(JSON.parse(localStorage.getItem(search)))
+  } else {
+    fetch(YtApiURL + search)
+    .then (function (response){
+      console.log('fetched')
+      return response.json()
+    })
+    .then (function (data) {
+      let ytURL =  'https://www.youtube.com/embed/';
+      let savedURL = ytURL + data.items[0].id.videoId
+      movie.url = savedURL;
+      localStorage.setItem(search, JSON.stringify(movie));
+      generateWindow(movie);
+    })
+  }  
+}
+
+function createSearchedItem(movieTitle) {
+  returnedSearch = movieTitle + " trailer";
+  searchArray = returnedSearch.split('');
+  for (let i = 0; i < searchArray.length; i++) {
+    if (searchArray[i] === "'") {
+      searchArray[i] = "%27";
+    } else if ((returnedSearch[i] === ' ')) {
+      searchArray[i] = "%20";
+    }
+  }
+  return searchArray.join('');
 }
 
 function generateListItem(movie) {
   let recentItem = $('<li>');
+  recentItem.attr('id', 'recent-item');
   recentItem.text(movie.title);
   recentItem.addClass('is-underlined');
   recentListEl.append(recentItem);
-  generateYTVideo(movie);
+  return;
 }
 
 //=============Event Listeners==================
-paginationEl.on('click', function(event){ 
+documentEl.on('click', function(event){ 
   event.preventDefault();
   if (event.target.id == 'previous') {
     if (pageIndex != 1) {
@@ -162,8 +172,16 @@ paginationEl.on('click', function(event){
       pageParameter += pageIndex;
 
       clearContent();
-      callApi(fetchedUrl + pageParameter)
+      callApi(TMDBApiURL + pageParameter)
     }
+  }
+  if (event.target.id === 'close') {
+    modalEl.removeClass('is-active');
+  }
+  if (event.target.id === 'recent-item') {
+    let x = createSearchedItem(event.target.textContent)
+    let storedMovie = JSON.parse(localStorage.getItem(x))
+    generateWindow(storedMovie);
   }
 })
 
@@ -179,12 +197,13 @@ $('#card-tiles ul').on('click', function(event){
     rating: $(event.target).data('rating')
   }
 
-  if (recentListEl.children[0] == null) {
+  if (recentListEl.children().length === 0) {
     generateListItem(movieObj);
   } else {
     let createLi = true;
-    for (let i = 0; i < recentListEl.children.length; i++) {
-      if (movieObj.title === recentListEl.children[i].text) {
+    
+    for (let i = 0; i < recentListEl.children().length; i++) {
+      if (movieObj.title === recentListEl.children()[i].textContent) {
         createLi = false;
         break;
       } 
@@ -194,11 +213,5 @@ $('#card-tiles ul').on('click', function(event){
       generateListItem(movieObj);
     }
   }
-})
-
-$('button').on('click', function(event){
-  event.stopPropagation();
-  if (event.target.id === 'close') {
-    modalEl.removeClass('is-active');
-  }
+  generateYTVideo(movieObj);
 })
