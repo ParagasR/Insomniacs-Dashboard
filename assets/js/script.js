@@ -9,6 +9,7 @@ var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var modalEl = $('#modal');
 var videoPlayerEl = $('#video-player');
+var recentListEl = $('#rv-list');
 
 // Api urls
 var TMDBApiURL = "https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate"
@@ -24,26 +25,21 @@ var currentMovieArray;
 callApi(TMDBApiURL + pageParameter);
 
 function callApi(url) {
-fetch(url)
-.then (function (response){
-    return response.json()
-})
-.then (function (data){
-    console.log(data.results)
-    console.log(data)
-
-    var title = data.original_title;
-
+  fetch(url)
+  .then (function (response){
+    return response.json();
+  })
+  .then (function (data){
     numberOfPages = data.total_pages;
     currentMovieArray = data.results;
     pageParameter = '&page=';
   
-    generateCardList(currentMovieArray)
-})
+    generateCardList(currentMovieArray);
+  })
 }
 
 function generateCardList(movieArray) {
-  //create 15 cards that will generate movie details
+  //create 20 cards that will generate movie details
 
   for (let i = 0; i < movieArray.length; i++) {
     let mainCard = $('<div>');
@@ -92,32 +88,27 @@ function clearContent() {
   ulRow4.empty();
 }
 
-function generateWindow(title, description, rating) {
+function generateWindow(movie) {
   //get yt video URL
-        // generateYtVideo(title);
   //movie title at the top
   //yt video below title
   //overview below the movie
-  console.log(title);
-  console.log(description);
-  console.log(rating)
 
-  generateYTVideo(title);
+  
 
-  $('.box h1').text(title);
-  $('.box p').text(description);
-  $('.box h5').text('Rating: ' + rating + '/10');
-
+  $('.box h1').text(movie.title);
+  $('.box p').text(movie.description);
+  $('.box h5').text('Rating: ' + movie.rating + '/10');
+  videoPlayerEl.attr('src', movie.url);
   modalEl.addClass('is-active');
 }
 
-function generateYTVideo(movieTitle) {
+function generateYTVideo(movie) {
   //take the movie title and append 'trailer' to it
   //take the new string and append to ytAPIURL
   //fetch ytAPIURL and grab video URL
   //return video URL
-
-  let search = movieTitle + " trailer";
+  let search = movie.title + " trailer";
   searchArray = search.split('');
   for (let i = 0; i < searchArray.length; i++) {
     if (searchArray[i] === "'") {
@@ -127,17 +118,29 @@ function generateYTVideo(movieTitle) {
     }
   }
   search = searchArray.join('');
+  //if search is in local storage then generate card from local storage
+  //else run fetch then generate card
+
   fetch(YtApiURL + search)
   .then (function (response){
     return response.json()
-})
-.then (function (data) {
-  console.log(data);
-  let ytURL =  'https://www.youtube.com/embed/';
-  console.log(ytURL  + data.items[0].id.videoId);
-  videoPlayerEl.attr('src', (ytURL + data.items[0].id.videoId));
-})
-  return
+  })
+  .then (function (data) {
+    let ytURL =  'https://www.youtube.com/embed/';
+    let savedURL = ytURL + data.items[0].id.videoId
+    movie.url = savedURL;
+    localStorage.setItem(search, JSON.stringify(movie));
+    generateWindow(movie);
+  })
+  
+}
+
+function generateListItem(movie) {
+  let recentItem = $('<li>');
+  recentItem.text(movie.title);
+  recentItem.addClass('is-underlined');
+  recentListEl.append(recentItem);
+  generateYTVideo(movie);
 }
 
 //=============Event Listeners==================
@@ -150,7 +153,7 @@ paginationEl.on('click', function(event){
 
       clearContent();
       callApi(fetchedUrl + pageParameter)
-      console.log(pageParameter);
+
     }
   }
   if (event.target.id == 'next') {
@@ -160,18 +163,37 @@ paginationEl.on('click', function(event){
 
       clearContent();
       callApi(fetchedUrl + pageParameter)
-      console.log(pageParameter);
     }
   }
 })
 
 $('#card-tiles ul').on('click', function(event){
+  event.preventDefault();
   //retreive movie title and overview
   //save movie title to local storage
   //update recently viewed list
   //call function to update list
+  let movieObj = {
+    title: $(event.target).data('title'),
+    description: $(event.target).data('description'),
+    rating: $(event.target).data('rating')
+  }
 
-  generateWindow($(event.target).data('title'), $(event.target).data('description'), $(event.target).data('rating'));
+  if (recentListEl.children[0] == null) {
+    generateListItem(movieObj);
+  } else {
+    let createLi = true;
+    for (let i = 0; i < recentListEl.children.length; i++) {
+      if (movieObj.title === recentListEl.children[i].text) {
+        createLi = false;
+        break;
+      } 
+    }
+
+    if (createLi) {
+      generateListItem(movieObj);
+    }
+  }
 })
 
 $('button').on('click', function(event){
