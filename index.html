@@ -112,7 +112,7 @@
       <section class="hero has-background-black is-small">
         <div class="hero-body">
           <!--search bar -->
-          <div class="control has-icons-left columns">
+          <div class="control has-icons-left columns mb-3">
             <input
               class="input is-danger column is-three-fifths is-offset-2"
               type="search"
@@ -127,11 +127,11 @@
 
       <!--Horror movie suggestions in cards/ dinamically created-->
       <section class="section is-large is-relative">
-        <div class="is-overlay background-image"></div>
-        <div class="columns">
-          <div class="column is-one-fifth">
+        <!-- <div class=""></div> -->
+        <div class="columns is-overlay background-image">
+          <div class="column is-one-fifth ml-3">
             <h3 class="title">Recently Viewed</h3>
-            <ul id="rv-list"></ul>
+            <ul class='content' id="rv-list"></ul>
           </div>
           <div class="column">
             <h3 class="title">Most Popular Movies</h3>
@@ -183,14 +183,6 @@
         ></button>
       </div>
     </main>
-
-    <footer class="footer">
-      <div class="content has-text-centered">
-        <p>
-          <strong>Copyrights to RMCS | Follow us on Twitter </strong>
-        </p>
-      </div>
-    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>

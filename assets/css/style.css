@@ -6,7 +6,8 @@
 
 .background-image {
   background-image: url("../scary.jpg");
-  opacity: 0.5;
+  /* opacity: 0.5; */
+  height: max-content;
   background-size: cover;
   background-position: center;
 }
@@ -23,7 +24,7 @@ ul {
   overflow: hidden;
 }
 
-li {
+#card-tiles li {
   float: left;
 }
 
@@ -31,7 +32,7 @@ li {
   cursor: pointer;
 }
 
-/* --------------Modal------------------------ */
+/* --------------Modal-------------- */
 .box {
   height: 25vw;
   width: 75vw;
@@ -41,4 +42,10 @@ li {
 .modal-content {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+/* --------------Recently Viewed List-------------- */
+.is-underlined:hover {
+  cursor: pointer;
+  color: red;
 }
