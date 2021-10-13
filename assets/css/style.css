@@ -5,7 +5,7 @@
 }
 
 .background-image {
-  background-image: url("../scary.jpg");
+  background-image: url("../image/scary.jpg");
   /* opacity: 0.5; */
   height: max-content;
   background-size: cover;
@@ -32,9 +32,15 @@ ul {
   cursor: pointer;
 }
 
+#card-list-item {
+  width: 120px;
+  height: auto;
+  text-align: left; 
+  display: inline-block !important;
+}
 /* --------------Modal-------------- */
 .box {
-  height: 25vw;
+  height: auto;
   width: 75vw;
   max-width: 100%;
 }
