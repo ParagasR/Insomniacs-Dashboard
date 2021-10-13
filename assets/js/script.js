@@ -7,11 +7,13 @@ var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var modalEl = $('#modal');
+var searchBarValue = $('#search-bar');
 var videoPlayerEl = $('#video-player');
 var recentListEl = $('#rv-list');
 
 // Api urls
 var TMDBApiURL = 'https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate'
+var searchAPIURl = 'https://api.themoviedb.org/3/search/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&include_adult=false';
 var YtApiURL =   'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
 
 //Global variables
@@ -32,7 +34,7 @@ function callApi(url) {
     numberOfPages = data.total_pages;
     currentMovieArray = data.results;
     pageParameter = '&page=';
-  
+    console.log(data)
     generateCardList(currentMovieArray);
   })
 }
@@ -51,8 +53,12 @@ function generateCardList(movieArray) {
 
     let cardFigure = $('<figure>');
     cardFigure.addClass('image', 'is-3by4');
-
-    let posterPath = 'https://image.tmdb.org/t/p/original/' + movieArray[i].poster_path;
+    let posterPath
+    if (movieArray[i].posterPath === null) {
+      posterPath = 'https://image.tmdb.org/t/p/original/' + movieArray[i].poster_path;
+    } else {
+      posterPath = '' //fill in image
+    }
     let posterImage = $('<img>');
     posterImage.attr('id', 'movieData');
     posterImage.attr('src', posterPath);
@@ -214,4 +220,14 @@ $('#card-tiles ul').on('click', function(event){
     }
   }
   generateYTVideo(movieObj);
+})
+
+searchBarValue.on('click', function(event){
+  event.preventDefault();
+  console.log('triggered')
+  console.log(event.target.value)
+
+  pageIndex = 1;
+  clearContent();
+  callApi(searchAPIURl + "&query=" + event.target.value);
 })
