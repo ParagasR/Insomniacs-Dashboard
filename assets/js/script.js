@@ -7,14 +7,14 @@ var ulRow2 = $('#row-2');
 var ulRow3 = $('#row-3');
 var ulRow4 = $('#row-4');
 var modalEl = $('#modal');
-var searchBarValue = $('#search-bar');
+var searchBarBtn = $('#search-bar');
 var videoPlayerEl = $('#video-player');
 var recentListEl = $('#rv-list');
 
 // Api urls
 var TMDBApiURL = 'https://api.themoviedb.org/3/discover/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=27&with_watch_monetization_types=flatrate'
 var searchAPIURl = 'https://api.themoviedb.org/3/search/movie?api_key=c7fa5c32a18aa2a0e3ea8e061504176d&language=en-US&include_adult=false';
-var YtApiURL =   'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
+var YtApiURL = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet&type=video&videoEmbeddable=true&key=AIzaSyBirNOStHPrCxDe1tUoghEqkGdVgMXq8Vk&q='
 
 //Global variables
 var pageIndex = 1;
@@ -24,6 +24,14 @@ var currentMovieArray;
 
 
 callApi(TMDBApiURL + pageParameter);
+generateListonLoad();
+
+function generateListonLoad() {
+  for (var i = 0; i < localStorage.length; i++){
+    console.log(JSON.parse(localStorage.getItem(localStorage.key(i))))
+    generateListItem(JSON.parse(localStorage.getItem(localStorage.key(i))))
+}
+}
 
 function callApi(url) {
   fetch(url)
@@ -54,10 +62,10 @@ function generateCardList(movieArray) {
     let cardFigure = $('<figure>');
     cardFigure.addClass('image', 'is-3by4');
     let posterPath
-    if (movieArray[i].posterPath === null) {
+    if (movieArray[i].poster_path != null) {
       posterPath = 'https://image.tmdb.org/t/p/original/' + movieArray[i].poster_path;
     } else {
-      posterPath = '' //fill in image
+      posterPath = './assets/image/movie-placeholder.png' //fill in image
     }
     let posterImage = $('<img>');
     posterImage.attr('id', 'movieData');
@@ -71,8 +79,14 @@ function generateCardList(movieArray) {
     cardImage.append(cardFigure);
     mainCard.append(cardImage);
 
+    let cardTitle = $('<p>');
+    cardTitle.text(movieArray[i].original_title);
+    cardTitle.attr('style', 'color: red; text-align: center')
+    
     let listItem = $('<li>');
+    listItem.attr('id', 'card-list-item');
     listItem.append(mainCard);
+    listItem.append(cardTitle);
     
     if (i < 5) {
       ulRow1.append(listItem);
@@ -98,8 +112,6 @@ function generateWindow(movie) {
   //movie title at the top
   //yt video below title
   //overview below the movie
-
-  
 
   $('.box h1').text(movie.title);
   $('.box p').text(movie.description);
@@ -222,12 +234,9 @@ $('#card-tiles ul').on('click', function(event){
   generateYTVideo(movieObj);
 })
 
-searchBarValue.on('click', function(event){
+searchBarBtn.on('click', function(event){
   event.preventDefault();
-  console.log('triggered')
-  console.log(event.target.value)
-
   pageIndex = 1;
   clearContent();
-  callApi(searchAPIURl + "&query=" + event.target.value);
+  callApi(searchAPIURl + "&query=" + $('#input-value')[0].value + pageParameter);
 })
