@@ -48,4 +48,4 @@ THEN the video will play
 
 ## Application Screenshot 
 
-![Insomniac's Dashboard.](assets\image\Screenshot-insomniacs.png)
+![Insomniac's Dashboard.](./assets/image/Screenshot-insomniacs.png)
