@@ -177,20 +177,18 @@ documentEl.on('click', function(event){
   if (event.target.id == 'previous') {
     if (pageIndex != 1) {
       pageIndex--;
-      pageParameter += pageIndex;
 
       clearContent();
-      callApi(fetchedUrl + pageParameter)
+      callApi(TMDBApiURL + (pageParameter + pageIndex))
 
     }
   }
   if (event.target.id == 'next') {
     if (pageIndex != numberOfPages) {
       pageIndex++
-      pageParameter += pageIndex;
 
       clearContent();
-      callApi(TMDBApiURL + pageParameter)
+      callApi(TMDBApiURL + (pageParameter + pageIndex))
     }
   }
   if (event.target.id === 'close') {
